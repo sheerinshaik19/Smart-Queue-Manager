@@ -1,37 +1,42 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import { type QueueEntry, type InsertQueueEntry } from "@shared/schema";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  joinQueue(entry: InsertQueueEntry): Promise<QueueEntry>;
+  getQueue(): Promise<QueueEntry[]>;
+  clearQueue(): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
-  private users: Map<string, User>;
+  private queue: QueueEntry[];
+  private currentToken: number;
+  private currentId: number;
 
   constructor() {
-    this.users = new Map();
+    this.queue = [];
+    this.currentToken = 1;
+    this.currentId = 1;
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async joinQueue(insertEntry: InsertQueueEntry): Promise<QueueEntry> {
+    const entry: QueueEntry = {
+      id: this.currentId++,
+      name: insertEntry.name,
+      tokenNumber: this.currentToken++,
+      status: "waiting",
+      joinedAt: new Date(),
+    };
+    this.queue.push(entry);
+    return entry;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async getQueue(): Promise<QueueEntry[]> {
+    return this.queue;
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async clearQueue(): Promise<void> {
+    this.queue = [];
+    this.currentToken = 1;
+    this.currentId = 1;
   }
 }
 
