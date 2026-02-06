@@ -1,0 +1,84 @@
+Build a professional Smart Queue Management System web application.
+
+PROJECT OVERVIEW:
+The application should help users join a queue digitally and receive a token number. 
+The system should have a clean dashboard, user flow pages, and a basic admin page.
+Focus on clarity, simplicity, and professional UI.
+
+TECH STACK:
+- Frontend: HTML, CSS, JavaScript (no React)
+- Backend: Node.js with Express
+- Communication: Fetch API
+- Styling: Modern, clean UI with cards and a blue theme
+- No database (in-memory queue is fine)
+
+FOLDER STRUCTURE:
+smart-queue/
+├── frontend/
+│   ├── index.html        (Dashboard)
+│   ├── join.html         (Join Queue page)
+│   ├── status.html       (Token Status page)
+│   ├── admin.html        (Admin Dashboard)
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── script.js
+│
+├── backend/
+│   ├── server.js
+│   └── package.json
+│
+└── README.md
+
+FRONTEND REQUIREMENTS:
+1. Dashboard (index.html)
+   - Project title: "Smart Queue Management System"
+   - Short description
+   - Two buttons:
+     - "User – Join Queue"
+     - "Admin Dashboard"
+
+2. Join Queue Page (join.html)
+   - Input field to enter user name
+   - Button: "Generate Token"
+   - On click, call backend API using Fetch
+
+3. Token Status Page (status.html)
+   - Display generated token number
+   - Store token using localStorage
+   - Button to go back to dashboard
+
+4. Admin Dashboard (admin.html)
+   - Simple professional page
+   - Placeholder text explaining admin role
+   - No advanced logic needed
+
+UI DESIGN:
+- Light gray background
+- White card layout
+- Blue primary color (#2563eb)
+- Centered content
+- Professional fonts and spacing
+- Reusable CSS styles
+
+BACKEND REQUIREMENTS:
+- Express server running on port 5000
+- Enable CORS and JSON parsing
+- POST /join-queue
+  - Accepts name from frontend
+  - Generates token number (queue length + 1)
+  - Returns token as JSON
+- GET /
+  - Returns simple "Backend running" message
+
+README.md:
+- Project description
+- Tech stack
+- How to run backend
+- How to open frontend
+
+IMPORTANT:
+- Keep the code clean and readable
+- Avoid unnecessary complexity
+- Ensure frontend and backend work together correctly
+- Make the project suitable for a college review
